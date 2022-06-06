@@ -19,7 +19,6 @@ jobs:
         python scrapper_rss.py
     - name: 🚀 Commit and push if it changed
       run: |          
-        git add -A
-        timestamp=$(date -u)
-        git commit -m "Latest data: ${timestamp}" || exit 0
+        git add diarios/diarios_historicos.csv
+        git commit -m "Latest data"
         git push    
