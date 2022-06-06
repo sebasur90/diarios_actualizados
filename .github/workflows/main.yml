@@ -25,4 +25,4 @@ jobs:
         git add diarios/diarios_historicos.csv
         git add fechas.csv
         git commit -m "Latest data"
-        git push origin HEAD:master
+        git push origin git@github.com:sebasur90/diarios_actualizados.git:master
