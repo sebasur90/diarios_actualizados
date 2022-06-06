@@ -20,8 +20,9 @@ jobs:
     - name: 🚀 Commit and push if it changed
       run: |     
         git config user.name "${GITHUB_ACTOR}"
-        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"     
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"  
+        git remote add origin https://github.com/sebasur90/diarios_actualizados.git  
         git add diarios/diarios_historicos.csv
         git add fechas.csv
         git commit -m "Latest data"
-        git push origin master https://github.com/sebasur90/diarios_actualizados.git
+        git push -u origin master 

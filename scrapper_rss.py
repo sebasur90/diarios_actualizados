@@ -3,8 +3,6 @@ import pandas as pd
 import requests
 import time
 from bs4 import BeautifulSoup
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
 from diarios_rss import diarios
 import agrega_sentimientos
 import datetime as dt
@@ -25,8 +23,11 @@ class Scrapper:
                 # st.write(st.session_state['muestra_progreso'])
                 time.sleep(0.5)
                 url = requests.get(diarios[diario]['rss'])
+
                 soup = BeautifulSoup(url.content, "xml")
+
                 items_pagina = soup.find_all('item')
+
                 for item in range(len(items_pagina)):
                     noticia = {}
                     noticia['diario'] = diarios[diario]['diario']
@@ -59,7 +60,8 @@ class Scrapper:
 
     def formateo_noticias(self):
         dataframe_noticias = pd.DataFrame(self.noticias).transpose()
-        dataframe_noticias.drop_duplicates(subset=['titulo'])
+        dataframe_noticias = dataframe_noticias.drop_duplicates(subset=[
+                                                                'titulo'])
         return dataframe_noticias
 
     def sentimientos(self, dataframe_noticias):
@@ -88,39 +90,12 @@ class Scrapper:
         fechas = fechas.append({'dia': dia_str}, ignore_index=True)
         fechas.to_csv("fechas.csv", index=False)
 
-    def transforma_letras_para_wordcloud(self, dataframe_noticias):
-        columna_analizada = list(dataframe_noticias.titulo)
-        acentos = {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
-                   'Á': 'A', 'E': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U'}
-        lista_palabras_para_wordcloud = []
-        for palabras in columna_analizada:
-            palabras_div = palabras.split(' ')
-            for letras in palabras_div:
-                for acen in acentos:
-                    if acen in letras:
-                        letras = letras.replace(acen, acentos[acen])
-                lista_palabras_para_wordcloud.append(letras.lower())
-        return ' '.join(lista_palabras_para_wordcloud)
-
-    def genera_wordcloud(self, palabras_para_wordcloud):
-        palabras_ignoradas = set(['a', 'ante', 'con', 'contra', 'de', 'desde', 'durante', 'en', 'para', 'por', 'segun', 'sin', 'sobre', 'el', 'la', 'los', 'las',
-                                  '...', 'y', 'hoy', 'este', 'cuanto',  'un', 'del', 'las',  'que', 'con', 'todos',  'es', '¿qué',  'como', 'cada',
-                                  'jueves', '¿cuanto', 'hoy', 'al', 'cual', 'se', 'su', 'sus', 'lo', 'una', 'un', 'tiene',
-                                  'le', 'habia'])
-
-        wordcloud = WordCloud(width=1920, height=1080, stopwords=palabras_ignoradas).generate(
-            palabras_para_wordcloud)
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis("off")
-
     def run(self):
         self.recorre_diarios()
         dataframe_noticias = self.formateo_noticias()
+        print(dataframe_noticias)
         self.sentimientos(dataframe_noticias)
         self.apila_diarios_historicos()
-        palabras_para_wordcloud = self.transforma_letras_para_wordcloud(
-            dataframe_noticias)
-        self.genera_wordcloud(palabras_para_wordcloud)
         self.agrega_fecha_hoy()
 
 
