@@ -21,7 +21,9 @@ jobs:
       run: |     
         git config user.name "${GITHUB_ACTOR}"
         git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"  
+        git show-ref
+        git remote add origin git@github.com:sebasur90/diarios_actualizados.git
         git add diarios/diarios_historicos.csv
         git add fechas.csv
         git commit -m "Latest data"
-        git push  https://github.com/sebasur90/diarios_actualizados.git master 
+        git push origin HEAD:master
