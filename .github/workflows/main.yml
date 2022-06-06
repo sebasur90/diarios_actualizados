@@ -18,7 +18,9 @@ jobs:
       run: |
         python scrapper_rss.py
     - name: 🚀 Commit and push if it changed
-      run: |          
+      run: |     
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"     
         git add diarios/diarios_historicos.csv
         git add fechas.csv
         git commit -m "Latest data"
