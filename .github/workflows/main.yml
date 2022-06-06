@@ -2,9 +2,9 @@ name: Master
 on:
   push:
     branches:
-      - main
+      - master
   schedule:
-    - cron: '15 * * * *'
+    - cron: '20 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
