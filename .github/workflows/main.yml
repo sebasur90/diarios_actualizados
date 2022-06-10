@@ -21,6 +21,10 @@ jobs:
       run: |          
         git config --global user.name 'sebasur90'
         git config --global user.email 'sebasur90@users.noreply.github.com'
+        git checkout -b newbranch
+        git checkout master
+        git merge newbranch
+        git branch -d newbranch
         git add fechas.csv
-        git commit -am "Automated report"
-        git push
+        git commit -m "Automated report"
+        git push origin HEAD: master
