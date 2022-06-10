@@ -19,6 +19,8 @@ jobs:
         python scrapper_rss.py
     - name: 🚀 Commit and push if it changed
       run: |
+        git config --global user.email "seba_sur90@hotmail.com"
+        git config --global user.name "sebasur90"
         git remote set-url origin https://{username}:{password}@github.com/{username}/diarios_actualizados.git        
         git checkout -b newbranch
         git checkout master
