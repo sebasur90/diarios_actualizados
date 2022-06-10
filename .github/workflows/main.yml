@@ -18,9 +18,8 @@ jobs:
       run: |
         python scrapper_rss.py
     - name: 🚀 Commit and push if it changed
-      run: |          
-        git config --global user.name 'sebasur90'
-        git config --global user.email 'sebasur90@users.noreply.github.com'
+      run: |         
+        git remote add origin https://{username}:{password}@github.com/{username}/project.git
         git checkout -b newbranch
         git checkout master
         git merge newbranch
