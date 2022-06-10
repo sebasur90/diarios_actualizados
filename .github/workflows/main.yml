@@ -27,4 +27,4 @@ jobs:
         git branch -d newbranch
         git add fechas.csv
         git commit -m "Automated report"
-        git push origin HEAD: master
+        git push origin master
