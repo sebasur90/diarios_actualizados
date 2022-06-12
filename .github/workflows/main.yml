@@ -20,7 +20,7 @@ jobs:
       run: |        
         git config --global user.email "seba_sur90@hotmail.com"
         git config --global user.name "sebasur90"         
-        git remote remove origin
+        git remote add origin https://github.com/sebasur90/diarios_actualizados.git        
         git remote set-url origin https://${{ secrets.PASS }}@github.com/${{ secrets.USER }}/diarios_actualizados.git  
         git checkout -b newbranch
         git checkout master
