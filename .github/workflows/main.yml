@@ -1,10 +1,7 @@
 name: Master
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-    types: [opened, synchronize]  
+    branches: [master]  
   schedule:
     - cron: '* */12 */15 * *'
 jobs:
@@ -23,7 +20,7 @@ jobs:
       run: |        
         git config --global user.email "seba_sur90@hotmail.com"
         git config --global user.name "sebasur90"         
-        git remote set-url origin https://${{ secrets.PASS }}@github.com/sebasur90/diarios_actualizados.git  
+        git remote set-url origin https://${{ secrets.PASS }}@github.com/${{ secrets.USER }}/diarios_actualizados.git  
         git checkout -b newbranch
         git checkout master
         git merge newbranch
