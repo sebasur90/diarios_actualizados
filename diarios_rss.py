@@ -1,7 +1,7 @@
-diarios={0:{'diario':'Telam',
-    'seccion':'Politica',
-    'rss': 'https://www.telam.com.ar/rss2/politica.xml'} ,
-    1: {'diario':'Telam',
+diarios={    4 : {'diario':'Clarin',
     'seccion':'Economia',
-    'rss': 'https://www.telam.com.ar/rss2/economia.xml' }     
+    'rss': 'https://www.clarin.com/rss/economia/' }  ,
+    5 : {'diario':'Clarin',
+    'seccion':'ultimas_noticias',
+    'rss': 'https://www.clarin.com/rss/lo-ultimo/' }     
 }

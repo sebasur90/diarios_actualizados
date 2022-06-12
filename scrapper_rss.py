@@ -84,17 +84,15 @@ class Scrapper:
 
     def sentimientos(self, dataframe_noticias):
         noticias = agrega_sentimientos.genera_excel_sentimientos(
-            dataframe_noticias)
-        noticias.to_csv(
-            f"diarios/noticias_con_sentimientos_{fecha_str}.csv", index=False)
+            dataframe_noticias)        
+        return noticias    
 
-    def apila_diarios_historicos(self):
-        lista_diarios = os.listdir('diarios')
-        lista_diarios.remove('diarios_historicos.csv')
+    def apila_diarios_historicos(self,dataframe_noticias):
         dataframes = []
         dataframes.append(pd.read_csv("diarios/diarios_historicos.csv"))
-        for diarios in lista_diarios:
-            dataframes.append(pd.read_csv("diarios/"+diarios))
+        dataframes.append(dataframe_noticias)
+        """for diarios in lista_diarios:
+            dataframes.append(pd.read_csv("diarios/"+diarios))"""
         apilados = pd.concat(dataframes, axis=0)
         apilados = apilados.drop_duplicates(subset=['titulo'])
         apilados.to_csv(f"diarios/diarios_historicos.csv", index=False)
@@ -108,9 +106,8 @@ class Scrapper:
     def run(self):
         self.recorre_diarios()
         dataframe_noticias = self.formateo_noticias()
-        print(dataframe_noticias)
-        self.sentimientos(dataframe_noticias)
-        self.apila_diarios_historicos()
+        dataframe_noticias=self.sentimientos(dataframe_noticias)
+        self.apila_diarios_historicos(dataframe_noticias)
         self.agrega_fecha_hoy()
 
 
