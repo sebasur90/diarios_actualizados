@@ -21,7 +21,8 @@ jobs:
         git config --local user.name "sebasur90"
         git config --global --add safe.directory /github/workspace
         git add fechas.csv
-        git commit -m "comentario"
+        git add diarios/diarios_historicos.csv
+        git commit -m "actualizando diarios"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
