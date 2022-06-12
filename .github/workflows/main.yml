@@ -17,15 +17,11 @@ jobs:
       run: |
         python scrapper_rss.py
     - name: 🚀 Commit and push if it changed
-      run: |        
-        git config --global user.email "seba_sur90@hotmail.com"
-        git config --global user.name "sebasur90"         
-        git remote add origin https://github.com/sebasur90/diarios_actualizados.git        
-        git remote set-url origin https://${{ secrets.PASS }}@github.com/${{ secrets.USER }}/diarios_actualizados.git  
-        git checkout -b newbranch
-        git checkout master
-        git merge newbranch
-        git branch -d newbranch
+      run: |      
+        git config --local user.name "sebasur90"
         git add fechas.csv
-        git commit -m "Automated report"
-        git push origin master
+        git commit -m "comentario"
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
