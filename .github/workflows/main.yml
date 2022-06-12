@@ -19,6 +19,7 @@ jobs:
     - name: 🚀 Commit and push if it changed
       run: |      
         git config --local user.name "sebasur90"
+        git config --global --add safe.directory /github/workspace
         git add fechas.csv
         git commit -m "comentario"
         uses: ad-m/github-push-action@master
