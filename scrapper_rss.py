@@ -6,7 +6,10 @@ from bs4 import BeautifulSoup
 from diarios_rss import diarios
 import agrega_sentimientos
 import datetime as dt
-
+import datetime
+now = datetime.datetime.now()
+fecha_str=str(now.strftime("%Y-%m-%d-%H-%M-%S"))
+import os
 
 class Scrapper:
 
@@ -62,19 +65,31 @@ class Scrapper:
         dataframe_noticias = pd.DataFrame(self.noticias).transpose()
         dataframe_noticias = dataframe_noticias.drop_duplicates(subset=[
                                                                 'titulo'])
+        datos=pd.read_csv('diarios/diarios_historicos.csv')
+        lista=[]
+        for titulo in list(dataframe_noticias.titulo.values):
+            if titulo not in list(datos.titulo.values):
+                lista.append(titulo)
+        dataframe_noticias=dataframe_noticias[dataframe_noticias.titulo.isin(lista)]
+        if len(dataframe_noticias)==0:        
+            print("No hay nuevas noticias para descargar")
+            from sys import exit
+            exit()
+        else:
+            pass    
+        print("****************************************************")
+        print(f"Noticias nuevas a descargar ---> {len(dataframe_noticias)}")
+        print("****************************************************")                                                                
         return dataframe_noticias
 
     def sentimientos(self, dataframe_noticias):
-
-        dia_str = str(dt.datetime.today().date())
         noticias = agrega_sentimientos.genera_excel_sentimientos(
             dataframe_noticias)
         noticias.to_csv(
-            f"diarios/noticias_con_sentimientos_{dia_str}.csv", index=False)
+            f"diarios/noticias_con_sentimientos_{fecha_str}.csv", index=False)
 
     def apila_diarios_historicos(self):
         lista_diarios = os.listdir('diarios')
-        print(lista_diarios)
         lista_diarios.remove('diarios_historicos.csv')
         dataframes = []
         dataframes.append(pd.read_csv("diarios/diarios_historicos.csv"))
@@ -86,8 +101,8 @@ class Scrapper:
 
     def agrega_fecha_hoy(self):
         fechas = pd.read_csv("fechas.csv")
-        dia_str = str(dt.datetime.today().date())
-        fechas = fechas.append({'dia': dia_str}, ignore_index=True)
+        fecha_str=str(now.strftime("%Y-%m-%d-%H-%M-%S"))
+        fechas = fechas.append({'dia': fecha_str}, ignore_index=True)
         fechas.to_csv("fechas.csv", index=False)
 
     def run(self):
