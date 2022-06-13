@@ -69,5 +69,11 @@ diarios={0:{'diario':'Telam',
     'rss': 'http://www.laizquierdadiario.com/spip.php?page=backend_portada' },         
     23 : {'diario':'Minuto_ar',
     'seccion':'ultimas_noticias',
-    'rss': 'https://www.minutoar.com.ar/rss/un_foto.html' } 
+    'rss': 'https://www.minutoar.com.ar/rss/un_foto.html' } ,
+     24: {'diario': 'Iprofesional',
+           'seccion': 'ultimas_noticias',
+           'rss': 'https://www.iprofesional.com/rss/home'},
+   25: {'diario': 'Iprofesional',
+       'seccion': 'Economia',
+       'rss': 'https://www.iprofesional.com/rss/economia'}
 }
